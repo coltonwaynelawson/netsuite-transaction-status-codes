@@ -1,0 +1,175 @@
+def netsuite_status_code_mapping(transaction):
+    transaction_type = transaction.get('type_abbr')
+    transaction_status = transaction.get('status')
+    status_conversions = {
+        'VendBill': {
+            'A': 'Open',
+            'B': 'Paid In Full'
+        },
+        'VendPymt': {
+            'V': 'Voided',
+            'Z': 'Online Bill Pay Pending Accounting Approval'
+        },
+        'CashSale': {
+            'A': 'Unapproved Payment',
+            'B': 'Not Deposited',
+            'C': 'Deposited'
+        },
+        'Check': {
+            'V': 'Voided',
+            'Z': 'Online Bill Pay Pending Accounting Approval'
+        },
+        'Commissn': {
+            'A': 'Pending Payment',
+            'O': 'Overpaid',
+            'P': 'Pending Accounting Approval',
+            'R': 'Rejected by Accounting',
+            'X': 'Paid In Full'
+        },
+        'CustCred': {
+            'A': 'Open',
+            'B': 'Fully Applied'
+        },
+        'CustDep': {
+            'A': 'Not Deposited',
+            'B': 'Deposited',
+            'C': 'Fully Applied'
+        },
+        'CustRfnd': {
+            'V': 'Voided'
+        },
+        'ExpRept': {
+            'A': 'In Progress',
+            'B': 'Pending Supervisor Approval',
+            'C': 'Pending Accounting Approval',
+            'D': 'Rejected by Supervisor',
+            'E': 'Rejected by Accounting',
+            'F': 'Approved by Accounting',
+            'G': 'Approved (Overridden) by Accounting',
+            'H': 'Rejected (Overridden) by Accounting',
+            'I': 'Paid In Full'
+        },
+        'CustInvc': {
+            'A': 'Open',
+            'B': 'Paid In Full'
+        },
+        'ItemShip': {
+            'A': 'Picked',
+            'B': 'Packed',
+            'C': 'Shipped'
+        },
+        'Journal': {
+            'A': 'Pending Approval',
+            'B': 'Approved for Posting'
+        },
+        'Opprtnty': {
+            'A': 'In Progress',
+            'B': 'Issued Estimate',
+            'C': 'Closed - Won',
+            'D': 'Closed - Lost'
+        },
+        'Paycheck': {
+            'A': 'Undefined',
+            'C': 'Pending Tax Calculation',
+            'D': 'Pending Commitment',
+            'F': 'Committed',
+            'P': 'Preview',
+            'R': 'Reversed'
+        },
+        'CustPymt': {
+            'A': 'Unapproved Payment',
+            'B': 'Not Deposited',
+            'C': 'Deposited'
+        },
+        'LiabPymt': {
+            'V': 'Voided'
+        },
+        'PurchOrd': {
+            'A': 'Pending Supervisor Approval',
+            'B': 'Pending Receipt',
+            'C': 'Rejected by Supervisor',
+            'D': 'Partially Received',
+            'E': 'Pending Billing/Partially Received',
+            'F': 'Pending Bill',
+            'G': 'Fully Billed',
+            'H': 'Closed'
+        },
+        'Estimate': {
+            'A': 'Open',
+            'B': 'Processed',
+            'C': 'Closed',
+            'V': 'Voided',
+            'X': 'Expired'
+        },
+        'RtnAuth': {
+            'A': 'Pending Approval',
+            'B': 'Pending Receipt',
+            'C': 'Cancelled',
+            'D': 'Partially Received',
+            'E': 'Pending Refund/Partially Received',
+            'F': 'Pending Refund',
+            'G': 'Refunded',
+            'H': 'Closed'
+        },
+        'SalesOrd': {
+            'A': 'Pending Approval',
+            'B': 'Pending Fulfillment',
+            'C': 'Cancelled',
+            'D': 'Partially Fulfilled',
+            'E': 'Pending Billing/Partially Fulfilled',
+            'F': 'Pending Billing',
+            'G': 'Billed',
+            'H': 'Closed'
+        },
+        'TaxPymt': {
+            'V': 'Voided',
+            'Z': 'Online Bill Pay Pending Accounting Approval'
+        },
+        'CustChrg': {
+            'A': 'Open',
+            'B': 'Paid In Full'
+        },
+        'TaxLiab': {
+            'V': 'Voided'
+        },
+        'TegPybl': {
+            'E': 'Endorsed',
+            'I': 'Issued',
+            'P': 'Paid'
+        },
+        'TegRcvbl': {
+            'C': 'Collected',
+            'D': 'Discounted',
+            'E': 'Endorsed',
+            'H': 'Holding'
+        },
+        'TrnfrOrd': {
+            'A': 'Pending Approval',
+            'B': 'Pending Fulfillment',
+            'C': 'Rejected',
+            'D': 'Partially Fulfilled',
+            'E': 'Pending Receipt/Partially Fulfilled',
+            'F': 'Pending Receipt',
+            'G': 'Received',
+            'H': 'Closed'
+        },
+        'VendAuth': {
+            'A': 'Pending Approval',
+            'B': 'Pending Return',
+            'C': 'Cancelled',
+            'D': 'Partially Returned',
+            'E': 'Pending Credit/Partially Returned',
+            'F': 'Pending Credit',
+            'G': 'Credited',
+            'H': 'Closed'
+        },
+        'WorkOrd': {
+            'B': 'Pending Build',
+            'C': 'Cancelled',
+            'D': 'Partially Built',
+            'G': 'Built',
+            'H': 'Closed'
+        }
+    }
+
+    return status_conversions.get(transaction_type).get(transaction_status)
